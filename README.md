@@ -13,13 +13,13 @@ Run `yarn`
 Run `yarn dev:server`
 
 ### Start debug server
-Run `yarn dev:server-debug`
+Run `yarn dev:debug`
 
 ### Start queue service
 Run `yarn dev:queue`
 
 ### Start debug queue service
-Run `yarn dev:debug-queue`
+Run `yarn dev:queue-debug`
 
 ***WARNING*** ONLY ONE DEBUG CAN BE RUNNING AT TIME
 

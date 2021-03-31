@@ -46,6 +46,8 @@ describe('UpdateSchedules', () => {
       mySchedule: 'Hello World',
     });
 
+    // TODO: MOCKAR RETORNO DA FUNÇÃO getState() CHAMADA NA LINHA 40 DO UpdateSchedulesService.ts, RETORNAR 'completed'.
+
     await fakeQueueProvider.addJob({
       key: 'ScheduledDispatch',
       job: {
