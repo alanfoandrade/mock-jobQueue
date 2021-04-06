@@ -1,4 +1,6 @@
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+import IPortalProvider from '../providers/PortalProvider/models/IPortalProvider';
+import ISchedulesRepository from '../repositories/ISchedulesRepository';
 
 @injectable()
 class SendSchedulesService {
@@ -6,16 +8,20 @@ class SendSchedulesService {
     return 'ScheduledDispatch';
   }
 
-  // constructor(
-  //   @inject('DispatchProvider')
-  //   private dispatchProvider: IDispatchProvider,
-  // ) {}
+  constructor(
+    // @inject('SchedulesRepository')
+    // private schedulesRepository: ISchedulesRepository,
 
-  public async execute(messageData: string): Promise<void> {
-    // await this.dispatchProvider.sendDispatch(messageData);
+    @inject('PortalProvider')
+    private portalProvider: IPortalProvider,
+  ) {}
 
-    // eslint-disable-next-line no-console
-    console.log(new Date(), messageData);
+  public async execute(): Promise<void> {
+    // await this.schedulesRepository.create({
+    //   mySchedule: 'hello world',
+    // });
+
+    await this.portalProvider.dispatchPortal({ portalData: 'hello World' });
   }
 }
 

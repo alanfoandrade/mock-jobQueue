@@ -23,14 +23,3 @@ Run `yarn dev:queue-debug`
 
 ***WARNING*** ONLY ONE DEBUG CAN BE RUNNING AT TIME
 
-## Tests
-Run `yarn test`
-
-- Test coverage report will be generated at ./coverage/lcov-report/index.html
-
-## Production build
-Run `yarn build`
-
-- Transpiled javascript files to production will be generated at /dist folder
-
-- Run `yarn prod:server`
