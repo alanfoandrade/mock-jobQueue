@@ -1,5 +1,6 @@
-import IQueueProvider from '@shared/container/providers/QueueProvider/models/IQueueProvider';
 import { inject, injectable } from 'tsyringe';
+
+import IQueueProvider from '@shared/container/providers/QueueProvider/models/IQueueProvider';
 import IPortalProvider from '../providers/PortalProvider/models/IPortalProvider';
 import ISchedulesRepository from '../repositories/ISchedulesRepository';
 
@@ -22,18 +23,18 @@ class SendSchedulesService {
 
   public async execute(data: any): Promise<void> {
     const schedule = await this.schedulesRepository.create({
-      mySchedule: 'hello world',
+      mySchedule: data,
     });
 
     await this.portalProvider.dispatchPortal({ portalData: 'hello World' });
 
     await this.queueProvider.addJob({
-      key: 'dispatchedSchedule',
+      key: 'DispatchedSchedule',
       job: {
         data: schedule,
         opts: {
           jobId: String(schedule.id),
-          delay: 0,
+          delay: 30 * 1000,
         },
       },
     });

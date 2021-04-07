@@ -23,7 +23,7 @@ class CreateSchedulesService {
         data: schedule,
         opts: {
           jobId: String(schedule.id),
-          delay: 0,
+          delay: 30 * 1000, // milisseconds
         },
       },
     });

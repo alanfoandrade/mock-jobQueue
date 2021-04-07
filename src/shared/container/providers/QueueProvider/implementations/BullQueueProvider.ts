@@ -4,6 +4,7 @@ import Queue, { Queue as BullClient, Job } from 'bull';
 import queueConfig from '@config/queue';
 import SendSchedulesService from '@modules/schedules/services/SendSchedulesService';
 
+import DispatchedSchedulesService from '@modules/schedules/services/DispatchedSchedulesService';
 import IQueueProvider from '../models/IQueueProvider';
 import IAddJobDTO from '../dtos/IAddJobDTO';
 import IFindJobDTO from '../dtos/IFindJobDTO';
@@ -19,6 +20,7 @@ interface IQueue {
 export default class BullQueueProvider implements IQueueProvider {
   private queues: IQueue;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private jobs: any[];
 
   constructor() {
@@ -29,8 +31,9 @@ export default class BullQueueProvider implements IQueueProvider {
 
   init(): void {
     const sendSchedulesService = container.resolve(SendSchedulesService);
+    const dispatchedSchedules = container.resolve(DispatchedSchedulesService);
 
-    this.jobs = [sendSchedulesService];
+    this.jobs = [sendSchedulesService, dispatchedSchedules];
 
     this.jobs.forEach(({ key, execute }) => {
       this.queues[key] = {
