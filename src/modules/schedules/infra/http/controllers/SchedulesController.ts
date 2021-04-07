@@ -7,26 +7,19 @@ import CreateSchedulesService from '@modules/schedules/services/CreateSchedulesS
 import UpdateSchedulesService from '@modules/schedules/services/UpdateSchedulesService';
 
 export default class SchedulesController {
-
   public async create(request: Request, response: Response): Promise<Response> {
-    const {
-     mySchedule
-    } = request.body;
+    const { mySchedule } = request.body;
 
     const createSchedules = container.resolve(CreateSchedulesService);
 
-    const schedule = await createSchedules.execute(
-      mySchedule
-    );
+    const schedule = await createSchedules.execute(mySchedule);
 
     return response.json(classToClass(schedule));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { scheduleId } = request.params;
-    const {
-      mySchedule
-    } = request.body;
+    const { mySchedule } = request.body;
 
     const updateSchedules = container.resolve(UpdateSchedulesService);
 
@@ -34,7 +27,7 @@ export default class SchedulesController {
 
     const schedule = await updateSchedules.execute({
       scheduleId: parsedScheduleId as ObjectID,
-      mySchedule
+      mySchedule,
     });
 
     return response.json(classToClass(schedule));

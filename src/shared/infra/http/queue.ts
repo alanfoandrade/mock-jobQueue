@@ -1,13 +1,17 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
-import '@shared/infra/typeorm';
 import '@shared/container';
-
-import { container } from 'tsyringe';
+import createDbConnection from '@shared/infra/typeorm';
 
 import BullQueueProvider from '@shared/container/providers/QueueProvider/implementations/BullQueueProvider';
 
-const queue = container.resolve(BullQueueProvider);
+async function runQueue() {
+  await createDbConnection();
 
-queue.processQueue();
+  const queue = new BullQueueProvider();
+
+  queue.processQueue();
+}
+
+runQueue();

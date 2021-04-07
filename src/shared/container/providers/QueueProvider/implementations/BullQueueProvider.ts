@@ -8,10 +8,6 @@ import IQueueProvider from '../models/IQueueProvider';
 import IAddJobDTO from '../dtos/IAddJobDTO';
 import IFindJobDTO from '../dtos/IFindJobDTO';
 
-const sendSchedulesService = container.resolve(SendSchedulesService);
-
-const jobs = [sendSchedulesService];
-
 interface IQueue {
   [key: string]: {
     client: BullClient;
@@ -23,6 +19,8 @@ interface IQueue {
 export default class BullQueueProvider implements IQueueProvider {
   private queues: IQueue;
 
+  private jobs: any[];
+
   constructor() {
     this.queues = {};
 
@@ -30,7 +28,11 @@ export default class BullQueueProvider implements IQueueProvider {
   }
 
   init(): void {
-    jobs.forEach(({ key, execute }) => {
+    const sendSchedulesService = container.resolve(SendSchedulesService);
+
+    this.jobs = [sendSchedulesService];
+
+    this.jobs.forEach(({ key, execute }) => {
       this.queues[key] = {
         client: new Queue(key, queueConfig),
         execute,
@@ -55,7 +57,7 @@ export default class BullQueueProvider implements IQueueProvider {
   }
 
   public processQueue(): void {
-    jobs.forEach((job) => {
+    this.jobs.forEach((job) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.queues[job.key].client.process((queueJob: any) => {
         const { data } = queueJob;

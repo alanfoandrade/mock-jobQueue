@@ -8,10 +8,12 @@ import AppError from '@shared/errors/AppError';
 
 import routes from './routes';
 
-import '@shared/infra/typeorm';
 import '@shared/container';
+import createDbConnection from '../typeorm';
 
 const app = express();
+
+createDbConnection();
 
 app.use(cors());
 app.use(express.json());
